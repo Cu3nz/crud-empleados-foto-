@@ -67,6 +67,26 @@ class Empleado extends Conexion
     }
 
 
+    public static function detalle($idEmpleadoGet){
+
+        parent::setConexion();
+
+        $q = "SELECT * from empleados2 where id = :i";
+
+        $stmt = parent::$conexion -> prepare($q);
+
+        try {
+            $stmt -> execute([':i' => $idEmpleadoGet]);
+        } catch (\PDOException $ex) {
+            die("Error en el metodo FindEmpleado mensaje " . $ex -> getMessage());
+        }
+        return $stmt -> fetch(PDO::FETCH_OBJ); //* Sabemos que solo va a devolver una fila o registro por lo tanto no hace falta poner fechtAll es tonteria
+        parent::$conexion = null;
+
+
+    }
+
+
     //? ----------------------------- FAKER ------------------
 
 
@@ -125,6 +145,43 @@ class Empleado extends Conexion
 
 
     //? ----------------------------- OTROS MEODOS ------------------
+
+    //todo metodo que comprueba si existe ya el email que introduce el usuario por el input a la hora de crear o de actualizar al empleado
+
+
+    public static function existeEmailRepetido($email , $id = null ){
+
+        parent::setConexion();
+
+         //*1º Consulta
+        //? Determinar la consulta SQL a ejecutar basada en la presencia o ausencia del ID.
+        //? Si el ID es nulo, se trata de una operación de CREACIÓN en el CRUD.
+        //? En este caso, la consulta verifica si el email ya existe en la base de datos.
+        //? Si la consulta devuelve un registro o fila, significa que el email ya está almacenado.
+        //? Por lo tanto no se va a poder crear el empleado con un email duplicado
+        
+        //*2º Consulta
+        //? Por otro lado, si el ID no es nulo, se trata de una operación de ACTUALIZACIÓN.
+        //? En este caso, la consulta verifica si el email ya está siendo usado por otro empleado o registro basicamente busca si ese email esta ya utilizado por otro empleado que no sea el que se esta actualizando en ese momento,
+        //? quitado  el registro actual que estamos actualizado (identificado por el id).
+        //? Esto es crucial para permitir la actualización del registro actual sin conflictos de email,
+        //? siempre y cuando el email no este siendo usado por otro cliente.
+
+        $q = ($id == null) ? "SELECT email from empleados2 where email = :e" : "SELECT email from empleados2 where email = :e AND id != :i";
+
+        $stmt  = parent::$conexion -> prepare($q);
+
+        $options = ($id == null) ? [':e' => $email] : [':e' => $email , ':i' => $id];
+
+        try {
+            $stmt -> execute($options);
+        } catch (\PDOException $ex) {
+            die("Error en el metodo existeemailRepetido mensaje " . $ex -> getMessage());
+        }
+
+        parent::$conexion = null;
+        return $stmt -> rowCount();
+    }
 
 
     //? ----------------------------- SETTERS ------------------

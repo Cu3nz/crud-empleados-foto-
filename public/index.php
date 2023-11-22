@@ -42,10 +42,16 @@ $empleado = Empleado::read(); //* En esta variable se almacena un array con todo
                     </div>
                     TXT;
                 } else {
-
-                
                 ?>
+                <!--//? Boton de crear un nuevo empleado-->
+                <div class="flex flex-row-reverse my-2">
+                    <a href="create.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mb-4 px-4 rounded">
+                        <i class="fa-solid fa-plus"></i> Nuevo cliente
+                    </a>
+                </div>
+                <!--//? Boton de crear un nuevo empleado-->
             <div class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
+            
                 <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -76,7 +82,7 @@ $empleado = Empleado::read(); //* En esta variable se almacena un array con todo
                         foreach ($empleado as $item) {
                             echo <<<TXT
                         
-                        ?>
+                        
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="w-4 p-4">
                                 <div class="flex items-center">
@@ -106,7 +112,7 @@ $empleado = Empleado::read(); //* En esta variable se almacena un array con todo
                             <td class="px-6 py-4">
                                 <form action="delete.php method="post">
                                 <a href="update.php?id={$item -> id}"></a>
-                                <a href="detalle.php?id={$item -> id}"><i class="fas fa-info mr-2 text-blue-600"></i></a>
+                                <a title="Pulsa para ir a detalles del empleado" href="detalle.php?id={$item -> id}"><i class="fas fa-info mr-2 text-blue-600"></i></a>
                                 <input type="hidden" value="id del item" name="id">
                                 <button type="submit"><i class="fas fa-trash text-red-600"></i></button>
                                 </form>
