@@ -86,6 +86,24 @@ class Empleado extends Conexion
 
     }
 
+    public static function delete ($idEmpleadoGet){
+        parent::setConexion();
+
+        $q = "delete from empleados2 where id = :i";
+
+        $stmt  = parent::$conexion -> prepare($q);
+
+        try {
+            $stmt -> execute([':i' => $idEmpleadoGet]);
+        } catch (\PDOException $ex) {
+            die("Error en el metodo delete " . $ex -> getMessage());
+        }
+
+        parent::$conexion = null;
+
+
+    }
+
 
     //? ----------------------------- FAKER ------------------
 

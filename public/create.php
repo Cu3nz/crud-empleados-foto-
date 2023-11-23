@@ -65,7 +65,7 @@ if (isset($_POST['btn'])){
 
         } else { //* Si han pasado las validaciones
 
-            $ruta = "./img/" . uniqid() . "_" . [$_FILES['imagen']['name']];
+        $ruta = "./img/" . uniqid() . "_" . $_FILES['imagen']['name'];
             
             //* Ahora hacemos el move 
             move_uploaded_file($_FILES['imagen']['tmp_name'] , $ruta);
@@ -74,7 +74,7 @@ if (isset($_POST['btn'])){
         }
 
     }else {
-        $imagen = "./img/default2.png";
+        $imagen = "img/default.png";
     }
 
 
@@ -183,7 +183,7 @@ if (isset($_POST['btn'])){
                             ?>
                         </div>
                         <div class="w-1/2">
-                            <img src="./img/default2.png" class="h-72 rounded w-full object-cover border-4 border-black" id="img"> <!--//? Imagen por defecto si no subimos nada-->
+                            <img src="./img/default.png" class="h-72 rounded w-full object-cover border-4 border-black" id="img"> <!--//? Imagen por defecto si no subimos nada-->
                         </div>
                     </div>
                 </div>

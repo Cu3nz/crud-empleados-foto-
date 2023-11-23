@@ -110,10 +110,10 @@ $empleado = Empleado::read(); //* En esta variable se almacena un array con todo
                                 {$item -> email}
                             </td>
                             <td class="px-6 py-4">
-                                <form action="delete.php method="post">
+                                <form action="delete.php" method="post">
                                 <a href="update.php?id={$item -> id}"></a>
                                 <a title="Pulsa para ir a detalles del empleado" href="detalle.php?id={$item -> id}"><i class="fas fa-info mr-2 text-blue-600"></i></a>
-                                <input type="hidden" value="id del item" name="id">
+                                <input type="hidden" value="{$item -> id}" name="id">
                                 <button type="submit"><i class="fas fa-trash text-red-600"></i></button>
                                 </form>
                             </td>
